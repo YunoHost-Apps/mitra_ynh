@@ -1,0 +1,83 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# INITIALIZE SETTINGS
+#=================================================
+ynh_script_progression "Initialize installation settings..."
+
+ynh_app_setting_set_default --key=email --value=$(ynh_user_get_info --username=$admin --key=mail)
+ynh_app_setting_set_default --key=upload --value="256M"
+ynh_app_setting_set_default --key=random_string --value="$(ynh_string_random --length=48)"
+
+#=================================================
+# CREATE A DATABASE
+#=================================================
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from git forge
+ynh_setup_source --dest_dir="$install_dir"
+
+#=================================================
+# INSTALL MITRA
+#=================================================
+# Download jenkins deb file and install it.
+dpkg --install --force-confnew "$install_dir/mitra.deb" || true
+dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
+
+if [[ $dpkg_install_failed -ge 1 ]]; then
+    ynh_print_warn --message="The service mitra cannot be started for now."
+fi
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration..."
+
+ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
+
+ynh_store_file_checksum /etc/$app/config.yaml
+
+#=================================================
+# START SERVICE
+#=================================================
+ynh_systemctl
+
+ynh_systemctl --action=enable --service=$app
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression "Configuring Nginx..."
+
+# Create a dedicated NGINX config
+ynh_config_add_nginx
+
+#=================================================
+# SPECIFIC SETUP
+#=================================================
+# PROVISION DATABASE
+#=================================================
+ynh_script_progression "Provisionning database..."
+
+ynh_mysql_db_shell < $install_dir/install/schema_mysql.sql
+
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+
+#=================================================
+# SETUP FAIL2BAN
+#=================================================
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"
