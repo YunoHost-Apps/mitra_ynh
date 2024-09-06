@@ -8,9 +8,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Initialize installation settings..."
 
-ynh_app_setting_set_default --key=email --value=$(ynh_user_get_info --username=$admin --key=mail)
-ynh_app_setting_set_default --key=upload --value="256M"
-ynh_app_setting_set_default --key=random_string --value="$(ynh_string_random --length=48)"
+ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$username --key=mail)
 
 #=================================================
 # CREATE A DATABASE
@@ -52,6 +50,11 @@ ynh_systemctl
 ynh_systemctl --action=enable --service=$app
 
 #=================================================
+# CREATE ADMIN
+#=================================================
+ynh_exec_as_app mitractl create-user $admin $adminpass admin
+
+#=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression "Configuring Nginx..."
@@ -64,9 +67,7 @@ ynh_config_add_nginx
 #=================================================
 # PROVISION DATABASE
 #=================================================
-ynh_script_progression "Provisionning database..."
 
-ynh_mysql_db_shell < $install_dir/install/schema_mysql.sql
 
 #=================================================
 # SETUP LOGROTATE

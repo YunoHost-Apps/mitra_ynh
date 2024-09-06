@@ -35,7 +35,7 @@ ram.runtime = "50M"
     default = "visitors"
 
     [install.admin]
-    type = "string"
+    type = "admin"
 
     [install.adminpass]
     type = "password"
