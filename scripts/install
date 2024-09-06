@@ -25,13 +25,15 @@ ynh_setup_source --dest_dir="$install_dir"
 #=================================================
 # INSTALL MITRA
 #=================================================
-# Download jenkins deb file and install it.
+# Download mitra deb file and install it.
 dpkg --install --force-confnew "$install_dir/mitra.deb" || true
 dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
 
 if [[ $dpkg_install_failed -ge 1 ]]; then
     ynh_print_warn --message="The service mitra cannot be started for now."
 fi
+
+yunohost service add "$app" --description="Mitra"
 
 #=================================================
 # ADD A CONFIGURATION

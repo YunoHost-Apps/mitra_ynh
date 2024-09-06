@@ -62,7 +62,6 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "php8.3-mbstring, php8.3-cli, php8.3-imagick, php8.3-xml, php8.3-zip, php8.3-curl, php8.3-ldap, php8.3-gd, mariadb-server, php8.3-mysql php8.3-gmp"
 
     [resources.database]
     type = "postgresql"

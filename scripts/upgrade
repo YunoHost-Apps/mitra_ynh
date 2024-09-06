@@ -1,0 +1,35 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# LOAD SETTINGS
+#=================================================
+ynh_script_progression "Loading settings..."
+
+ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$username --key=mail)
+
+#=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression "Ensuring downward compatibility..."
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+
+ynh_script_progression "Upgrading source files..."
+
+dpkg --install --force-confnew "$install_dir/mitra.deb" || true
+dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
+
+if [[ $dpkg_install_failed -ge 1 ]]; then
+    ynh_print_warn --message="The service mitra cannot be started for now."
+fi
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Upgrade of $app completed"
