@@ -44,8 +44,8 @@ ram.runtime = "50M"
 
     [resources.sources]
         [resources.sources.main]
-        url = "https://codeberg.org/silverpill/mitra/releases/download/v3.3.0/mitra_3.3.0_amd64.deb"
-        sha256 = "c04aad95d0c095573d2880f65dab7c241a08d79e09b5da3167e09191ab5fa793"
+        url = "https://codeberg.org/silverpill/mitra/releases/download/v3.8.0/mitra_3.8.0_amd64.deb"
+        sha256 = "59d7ec9561b17bbee49b91f10fc535782498ccb7c199607a5921016df3841b09"
         format = "deb"
         extract = false
         rename = "mitra.deb"
