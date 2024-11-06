@@ -23,7 +23,7 @@ ynh_setup_source --dest_dir="$install_dir"
 #=================================================
 
 # We need this for the systemd script
-ln -s $data_dir /var/lib/$app
+ln -s $data_dir /var/lib/
 
 # Download mitra deb file and install it.
 dpkg --install --force-confnew "$install_dir/mitra.deb" || true
