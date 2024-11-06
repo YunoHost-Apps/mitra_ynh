@@ -22,6 +22,9 @@ ynh_setup_source --dest_dir="$install_dir"
 # INSTALL MITRA
 #=================================================
 
+# We need this for the systemd script
+ln -s $data_dir /var/lib/$app
+
 # Download mitra deb file and install it.
 dpkg --install --force-confnew "$install_dir/mitra.deb" || true
 dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
@@ -29,9 +32,6 @@ dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mi
 if [[ $dpkg_install_failed -ge 1 ]]; then
     ynh_die --message="The service mitra cannot be installed for now."
 fi
-
-# We need this for the systemd script
-ln -s $data_dir /var/lib/$app
 
 # List systemd service in YunoHost
 yunohost service add "$app" --description="Mitra server backend"
