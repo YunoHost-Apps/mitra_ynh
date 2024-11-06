@@ -33,7 +33,10 @@ if [[ $dpkg_install_failed -ge 1 ]]; then
     ynh_print_warn --message="The service mitra cannot be started for now."
 fi
 
-yunohost service add "$app" --description="Mitra"
+
+# Create a dedicated systemd config
+
+yunohost service add "$app" --description="Mitra server backend"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -47,9 +50,8 @@ ynh_store_file_checksum /etc/$app/config.yaml
 #=================================================
 # START SERVICE
 #=================================================
-ynh_systemctl
 
-ynh_systemctl --action=enable --service=$app
+ynh_systemctl
 
 #=================================================
 # CREATE ADMIN
