@@ -5,18 +5,18 @@ name = "Mitra"
 description.en = "Federated micro-blogging platform."
 description.fr = "Plateforme de micro-blogging fédéré"
 
-version = "3.30~ynh1"
+version = "3.80~ynh1"
 
 maintainers = ["Papa Dragon"]
 
 [upstream]
-license = "Unlicense"
+license = " AGPL-3.0-only"
 code = "https://codeberg.org/silverpill/mitra"
 
 [integration]
 yunohost = ">= 11.2.18"
 helpers_version = "2.1"
-architectures = "all"
+architectures = "amd64"
 multi_instance = true
 ldap = false
 sso = false
@@ -49,6 +49,8 @@ ram.runtime = "50M"
         format = "deb"
         extract = false
         rename = "mitra.deb"
+        autoupdate.strategy = "latest_forgejo_tag"
+        autoupdate.version_regex = "^v(.*)$"
 
     [resources.ports]
 

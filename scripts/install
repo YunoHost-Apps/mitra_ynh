@@ -8,11 +8,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Initialize installation settings..."
 
-ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$username --key=mail)
-
-#=================================================
-# CREATE A DATABASE
-#=================================================
+ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$admin --key=username)
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -30,11 +26,13 @@ dpkg --install --force-confnew "$install_dir/mitra.deb" || true
 dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
 
 if [[ $dpkg_install_failed -ge 1 ]]; then
-    ynh_print_warn --message="The service mitra cannot be started for now."
+    ynh_die --message="The service mitra cannot be installed for now."
 fi
 
+# We need this for the systemd script
+ln -s $data_dir /var/lib/$app
 
-# Create a dedicated systemd config
+# List systemd service in YunoHost
 
 yunohost service add "$app" --description="Mitra server backend"
 
@@ -65,13 +63,6 @@ ynh_script_progression "Configuring Nginx..."
 
 # Create a dedicated NGINX config
 ynh_config_add_nginx
-
-#=================================================
-# SPECIFIC SETUP
-#=================================================
-# PROVISION DATABASE
-#=================================================
-
 
 #=================================================
 # SETUP LOGROTATE
