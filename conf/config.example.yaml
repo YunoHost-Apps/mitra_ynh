@@ -13,7 +13,7 @@ storage_dir: __DATA_DIR__
 web_client_dir: /usr/share/mitra/www
 
 http_host: '127.0.0.1'
-http_port: 8383
+http_port: __PORT__
 
 # List of allowed origins for CORS (in addition to `instance_uri`)
 # Trailing slashes are not allowed.
