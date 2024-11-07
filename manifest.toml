@@ -61,7 +61,7 @@ ram.runtime = "50M"
     [resources.ports]
 
     [resources.apt]
-    packages = "postgresql, cargo"
+    packages = "postgresql"
 
     [resources.database]
     type = "postgresql"
