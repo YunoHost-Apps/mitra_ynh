@@ -26,11 +26,11 @@ ynh_script_progression --message="Installing Rust and Cargo..." --weight=1
 
 # Install rustup with the toolchain needed by Mitra
 pushd "$install_dir"
-    ynh_exec_warn_less ynh_exec_as "$app" \
+    ynh_hide_warnings ynh_exec_as_app \
         RUSTUP_HOME="$install_dir/.rustup" \
         CARGO_HOME="$install_dir/.cargo" \
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-    | ynh_exec_as "$app" sh -s -- -q -y
+    | ynh_exec_as_app sh -s -- -q -y
 popd
 
 #=================================================
