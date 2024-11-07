@@ -52,6 +52,8 @@ ynh_safe_rm "$install_dir/.rustup"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
+mkdir /etc/$app
+
 ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
 
 ynh_store_file_checksum /etc/$app/config.yaml
