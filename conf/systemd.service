@@ -1,0 +1,18 @@
+[Unit]
+Description=Mitra Server
+After=postgresql.service
+Requires=postgresql.service
+
+[Service]
+ExecStart=/usr/bin/mitra
+WorkingDirectory=__DATA_DIR__
+User=__APP__
+Group=__APP__
+
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
+

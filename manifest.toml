@@ -44,13 +44,16 @@ ram.runtime = "50M"
 
     [resources.sources]
         [resources.sources.main]
-        url = "https://codeberg.org/silverpill/mitra/releases/download/v3.8.0/mitra_3.8.0_amd64.deb"
-        sha256 = "59d7ec9561b17bbee49b91f10fc535782498ccb7c199607a5921016df3841b09"
-        format = "deb"
-        extract = false
-        rename = "mitra.deb"
+        url = "https://codeberg.org/silverpill/mitra/archive/v3.8.0.tar.gz"
+        sha256 = "66a1813a3767b6b3213e261962dfa75f8f6341454a505c9b180faf5e6ebbcaf2"
         autoupdate.strategy = "latest_forgejo_tag"
         autoupdate.version_regex = "^v(.*)$"
+
+        [resources.sources.mitra-web]
+        url = "https://codeberg.org/silverpill/mitra-web/releases/download/v3.8.0/mitra-web_3.8.0.tar.gz"
+        sha256 = "62efcd2b14bd8023f60df3d7d091cdcf6dcc420d89b9e4d7ac209dd60a8c7b4f"
+        autoupdate.strategy = "latest_forgejo_release"
+        autoupdate.upstream = "https://codeberg.org/silverpill/mitra-web"
 
     [resources.system_user]
 
