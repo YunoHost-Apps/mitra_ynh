@@ -69,7 +69,7 @@ ynh_systemctl
 # CREATE ADMIN
 #=================================================
 
-ynh_exec_as_app $install_dir/target/release/mitractl create-user $admin $adminpass admin
+ynh_exec_as_app mitractl create-account $admin $adminpass admin
 
 #=================================================
 # NGINX CONFIGURATION
