@@ -44,11 +44,8 @@ ram.runtime = "50M"
 
     [resources.sources]
         [resources.sources.main]
-        url = "https://codeberg.org/silverpill/mitra/releases/download/v3.8.0/mitra_3.8.0_amd64.deb"
-        sha256 = "59d7ec9561b17bbee49b91f10fc535782498ccb7c199607a5921016df3841b09"
-        format = "deb"
-        extract = false
-        rename = "mitra.deb"
+        url = "https://codeberg.org/silverpill/mitra/archive/v3.8.0.tar.gz"
+        sha256 = "66a1813a3767b6b3213e261962dfa75f8f6341454a505c9b180faf5e6ebbcaf2"
         autoupdate.strategy = "latest_forgejo_tag"
         autoupdate.version_regex = "^v(.*)$"
 
@@ -64,7 +61,7 @@ ram.runtime = "50M"
     [resources.ports]
 
     [resources.apt]
-    packages = "postgresql"
+    packages = "postgresql, cargo"
 
     [resources.database]
     type = "postgresql"

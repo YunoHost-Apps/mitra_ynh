@@ -9,9 +9,8 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
-yunohost service remove "$app"
-
-ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
+ynh_systemctl --service="$app" --action="stop"
+ynh_config_remove_systemd
 
 # Remove the dedicated NGINX config
 ynh_config_remove_nginx
@@ -19,11 +18,6 @@ ynh_config_remove_nginx
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Removing Mitra deb packages..."
-
-# Remove metapackage and its dependencies
-apt purge "$app"
-ynh_apt_remove_dependencies
 
 #=================================================
 # REMOVE VARIOUS FILES
@@ -32,8 +26,8 @@ ynh_script_progression --message="Removing various files..."
 
 # Remove a directory securely
 ynh_safe_rm "/etc/$app"
-
-ynh_safe_rm "/var/lib/$app"
+ynh_safe_rm "/usr/bin/mitra"
+ynh_safe_rm "/usr/bin/mitractl"
 
 #=================================================
 # END OF SCRIPT

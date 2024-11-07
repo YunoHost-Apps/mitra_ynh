@@ -15,26 +15,17 @@ ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from git forge
+# Download, check integrity, uncompress and patch the source from GitHub
 ynh_setup_source --dest_dir="$install_dir"
 
 #=================================================
-# INSTALL MITRA
+# BUILD MITRA
 #=================================================
 
-# We need this for the systemd script
-ln -s $data_dir /var/lib/
+ynh_exec_as_app cargo build --release --features production
 
-# Download mitra deb file and install it.
-dpkg --install --force-confnew "$install_dir/mitra.deb" || true
-dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
-
-if [[ $dpkg_install_failed -ge 1 ]]; then
-    ynh_die --message="The service mitra cannot be installed for now."
-fi
-
-# List systemd service in YunoHost
-yunohost service add "$app" --description="Mitra server backend"
+ln -s $install_dir/target/release/mitra /usr/bin/
+ln -s $install_dir/target/release/mitractl /usr/bin/
 
 #=================================================
 # ADD A CONFIGURATION
@@ -46,14 +37,16 @@ ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.
 ynh_store_file_checksum /etc/$app/config.yaml
 
 #=================================================
-# START SERVICE
+# SETUP & START SERVICE
 #=================================================
 
+ynh_config_add_systemd
 ynh_systemctl
 
 #=================================================
 # CREATE ADMIN
 #=================================================
+
 ynh_exec_as_app mitractl create-user $admin $adminpass admin
 
 #=================================================
