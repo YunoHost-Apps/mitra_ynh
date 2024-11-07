@@ -63,7 +63,7 @@ ynh_store_file_checksum /etc/$app/config.yaml
 #=================================================
 
 ynh_config_add_systemd
-ynh_systemctl
+ynh_systemctl --action=status
 
 #=================================================
 # CREATE ADMIN
