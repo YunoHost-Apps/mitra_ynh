@@ -18,16 +18,34 @@ ynh_script_progression "Setting up source files..."
 # Download, check integrity, uncompress and patch the source from GitHub
 ynh_setup_source --dest_dir="$install_dir"
 
+
+#=================================================
+# INSTALL RUST/CARGO
+#=================================================
+ynh_script_progression --message="Installing Rust and Cargo..." --weight=1
+
+# Install rustup with the toolchain needed by Mitra
+pushd "$install_dir"
+    ynh_exec_warn_less ynh_exec_as "$app" \
+        RUSTUP_HOME="$install_dir/.rustup" \
+        CARGO_HOME="$install_dir/.cargo" \
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+    | ynh_exec_as "$app" sh -s -- -q -y
+popd
+
 #=================================================
 # BUILD MITRA
 #=================================================
 
 pushd $install_dir
-	ynh_exec_as_app cargo build --release --features production
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
 popd
 
 ln -s $install_dir/target/release/mitra /usr/bin/
 ln -s $install_dir/target/release/mitractl /usr/bin/
+
+ynh_safe_rm "$install_dir/.cargo"
+ynh_safe_rm "$install_dir/.rustup"
 
 #=================================================
 # ADD A CONFIGURATION
