@@ -22,7 +22,9 @@ ynh_setup_source --dest_dir="$install_dir"
 # BUILD MITRA
 #=================================================
 
-ynh_exec_as_app cargo build --release --features production
+pushd $install_dir
+	ynh_exec_as_app cargo build --release --features production
+popd
 
 ln -s $install_dir/target/release/mitra /usr/bin/
 ln -s $install_dir/target/release/mitractl /usr/bin/
