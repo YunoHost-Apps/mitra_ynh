@@ -17,7 +17,7 @@ code = "https://codeberg.org/silverpill/mitra"
 yunohost = ">= 11.2.30"
 helpers_version = "2.1"
 architectures = ["amd64"]
-multi_instance = true
+multi_instance = false
 ldap = false
 sso = false
 disk = "150M"

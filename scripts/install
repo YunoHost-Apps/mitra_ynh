@@ -23,7 +23,7 @@ ynh_setup_source --dest_dir="$install_dir/dist" --source_id="mitra-web"
 #=================================================
 # INSTALL RUST/CARGO
 #=================================================
-ynh_script_progression --message="Installing Rust and Cargo..." --weight=1
+ynh_script_progression "Installing Rust and Cargo..." --weight=1
 
 # Install rustup with the toolchain needed by Mitra
 pushd "$install_dir"
@@ -31,7 +31,7 @@ pushd "$install_dir"
         RUSTUP_HOME="$install_dir/.rustup" \
         CARGO_HOME="$install_dir/.cargo" \
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-    | ynh_exec_as_app sh -s -- -q -y
+    | ynh_hide_warnings ynh_exec_as_app sh -s -- -q -y
 popd
 
 #=================================================
@@ -71,7 +71,6 @@ ynh_exec_as_app mitractl create-account $admin $adminpass admin
 
 ynh_config_add_systemd
 ynh_systemctl --action=start
-ynh_systemctl --action=status
 
 #=================================================
 # NGINX CONFIGURATION

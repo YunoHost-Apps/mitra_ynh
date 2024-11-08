@@ -8,7 +8,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Loading settings..."
 
-ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$username --key=username)
+ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$admin --key=username)
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -18,15 +18,78 @@ ynh_script_progression "Ensuring downward compatibility..."
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression "Setting up source files..."
 
-ynh_script_progression "Upgrading source files..."
+# First we remove the previous install
+ynh_safe_rm $install_dir
+ynh_safe_rm "/etc/$app"
+ynh_safe_rm "/usr/bin/mitra"
+ynh_safe_rm "/usr/bin/mitractl"
 
-dpkg --install --force-confnew "$install_dir/mitra.deb" || true
-dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
+# Remove the service
+ynh_systemctl --service="$app" --action="stop"
+ynh_config_remove_systemd
 
-if [[ $dpkg_install_failed -ge 1 ]]; then
-    ynh_die --message="The service mitra cannot be started for now."
-fi
+# Remove the dedicated NGINX config
+ynh_config_remove_nginx
+
+# Download, check integrity, uncompress and patch the source from GitHub
+ynh_setup_source --dest_dir="$install_dir"
+ynh_setup_source --dest_dir="$install_dir/dist" --source_id="mitra-web"
+
+#=================================================
+# INSTALL RUST/CARGO
+#=================================================
+ynh_script_progression "Installing Rust and Cargo..." --weight=1
+
+# Install rustup with the toolchain needed by Mitra
+pushd "$install_dir"
+    ynh_hide_warnings ynh_exec_as_app \
+        RUSTUP_HOME="$install_dir/.rustup" \
+        CARGO_HOME="$install_dir/.cargo" \
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+    | ynh_hide_warnings ynh_exec_as_app sh -s -- -q -y
+popd
+
+#=================================================
+# BUILD MITRA
+#=================================================
+
+pushd $install_dir
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
+popd
+
+ln -s $install_dir/target/release/mitra /usr/bin/
+ln -s $install_dir/target/release/mitractl /usr/bin/
+
+ynh_safe_rm "$install_dir/.cargo"
+ynh_safe_rm "$install_dir/.rustup"
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration..."
+
+mkdir /etc/$app
+
+ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
+
+ynh_store_file_checksum /etc/$app/config.yaml
+
+#=================================================
+# SETUP & START SERVICE
+#=================================================
+
+ynh_config_add_systemd
+ynh_systemctl --action=start
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression "Configuring Nginx..."
+
+# Create a dedicated NGINX config
+ynh_config_add_nginx
 
 #=================================================
 # END OF SCRIPT

@@ -8,18 +8,16 @@ ynh_print_info "Declaring files to be backed up..."
 #=================================================
 # BACKUP THE APP MAIN DIR & DATA DIR
 #=================================================
+ynh_script_progression "Backup of install dir & data directories..."
 
 ynh_backup "$install_dir"
-
-#=================================================
-# BACKUP THE DATA DIR
-#=================================================
 
 ynh_backup "$data_dir"
 
 #=================================================
-# SYSTEM CONFIGURATION
+# BACKUP CONFIG FILE
 #=================================================
+ynh_script_progression "Backup of Mitra server configuration..."
 
 ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
 
@@ -28,9 +26,16 @@ ynh_backup "/etc/$app/config.yaml"
 #=================================================
 # BACKUP THE DATABASE
 #=================================================
-ynh_print_info "Backup of the database..."
+ynh_script_progression "Backup of the database..."
 
 ynh_psql_dump_db > db.sql
+
+#=================================================
+# BACKUP CONFIG FILE
+#=================================================
+ynh_script_progression "Backup of various files..."
+
+ynh_backup "/etc/$app"
 
 #=================================================
 # END OF SCRIPT
