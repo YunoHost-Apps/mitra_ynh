@@ -38,6 +38,13 @@ ynh_script_progression "Backup of various files..."
 ynh_backup "/etc/$app"
 
 #=================================================
+# BACKUP LOGROTATE
+#=================================================
+
+ynh_backup "/etc/logrotate.d/$app"
+ynh_backup "/var/log/$app"
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 

@@ -46,7 +46,8 @@ ln -s $install_dir/target/release/mitractl /usr/bin/
 #=================================================
 # RESTORE LOGROTATE
 #=================================================
-#ynh_restore "/etc/logrotate.d/$app"
+ynh_restore "/etc/logrotate.d/$app"
+ynh_restore "/var/log/$app"
 
 #=================================================
 # RELOAD NGINX

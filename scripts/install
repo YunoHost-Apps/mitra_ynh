@@ -66,6 +66,15 @@ ynh_store_file_checksum /etc/$app/config.yaml
 ynh_exec_as_app mitractl create-account $admin $adminpass admin
 
 #=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression "Configuring log rotation..."
+
+# Use logrotate to manage application logfile(s)
+ynh_config_add_logrotate "/var/log/$app/$app.log"
+ynh_exec_as_app touch "/var/log/$app/$app.log"
+
+#=================================================
 # SETUP & START SERVICE
 #=================================================
 
