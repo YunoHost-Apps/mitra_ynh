@@ -61,7 +61,7 @@ ynh_systemctl --service=nginx --action=reload
 # SETUP & START SERVICE
 #=================================================
 
-ynh_config_add_systemd --template=mitra
+ynh_config_add_systemd --template=mitra.service
 ynh_systemctl --action=start
 
 #=================================================
