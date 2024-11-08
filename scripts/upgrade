@@ -80,7 +80,7 @@ ynh_store_file_checksum /etc/$app/config.yaml
 # SETUP & START SERVICE
 #=================================================
 
-ynh_config_add_systemd
+ynh_config_add_systemd --template=mitra
 ynh_systemctl --action=start
 
 #=================================================
