@@ -24,7 +24,6 @@ ynh_config_remove_nginx
 #=================================================
 ynh_script_progression "Removing various files..."
 
-# Remove a directory securely
 ynh_safe_rm "/etc/$app"
 ynh_safe_rm "/usr/bin/mitra"
 ynh_safe_rm "/usr/bin/mitractl"
