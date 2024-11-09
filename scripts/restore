@@ -52,9 +52,11 @@ ynh_restore "/var/log/$app"
 #=================================================
 # SETUP & START SERVICE
 #=================================================
+ynh_restore "/etc/systemd/system/$app.service"
+systemctl enable "$app.service" --quiet
 
-ynh_config_add_systemd --template=mitra.service
-ynh_systemctl --action=start
+ynh_script_progression "Starting $app's systemd service..."
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" 
 
 #=================================================
 # RELOAD NGINX
