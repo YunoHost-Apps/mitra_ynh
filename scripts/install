@@ -63,7 +63,7 @@ ynh_store_file_checksum /etc/$app/config.yaml
 # CREATE ADMIN
 #=================================================
 
-ynh_exec_as_app mitractl create-account $admin $adminpass admin
+ynh_exec_as_app mitractl create-account $admin $password admin
 
 #=================================================
 # SETUP LOGROTATE
