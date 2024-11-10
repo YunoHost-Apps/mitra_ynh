@@ -31,7 +31,7 @@ ynh_psql_dump_db > db.sql
 # BACKUP CONFIG FILE
 #=================================================
 
-ynh_backup "/etc/$app/config.yaml"
+ynh_backup "/etc/$app"
 
 #=================================================
 # BACKUP LOGROTATE
