@@ -7,7 +7,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # RESTORE THE APP MAIN DIR & DATA DIR
 #=================================================
-ynh_script_progression "Restoring the app main directory..."
+ynh_script_progression "Restoring the app install & data directories..."
 
 ynh_restore "$install_dir"
 ynh_restore "$data_dir"
@@ -15,7 +15,7 @@ ynh_restore "$data_dir"
 #=================================================
 # RESTORE THE DATABASE
 #=================================================
-ynh_script_progression "Restoring  MySQL database..."
+ynh_script_progression "Restoring  PostgreSQL database..."
 
 ynh_psql_db_shell  < "./db.sql"
 
@@ -31,21 +31,42 @@ ynh_psql_db_shell  < "./db.sql"
 #=================================================
 # RESTORE CONFIG FILE
 #=================================================
+ynh_script_progression "Restore Mitra server configuration..."
+
 ynh_restore "/etc/$app/config.yaml"
+
+#=================================================
+# RESTORE SYMLINKS
+#=================================================
+ynh_script_progression "Restoring various files..."
+
+ln -s $install_dir/target/release/mitra /usr/bin/
+ln -s $install_dir/target/release/mitractl /usr/bin/
 
 #=================================================
 # RESTORE LOGROTATE
 #=================================================
-#ynh_restore "/etc/logrotate.d/$app"
+ynh_restore "/etc/logrotate.d/$app"
+ynh_restore "/var/log/$app"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression "Reloading NGINX web server and PHP-FPM..."
+ynh_script_progression "Reloading NGINX web server..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_systemctl --service=nginx --action=reload
+
+#=================================================
+# SETUP & START SERVICE
+#=================================================
+ynh_restore "/etc/systemd/system/$app.service"
+systemctl enable "$app.service" --quiet
+yunohost service add "$app" --description="Federated micro-blogging platform"
+
+ynh_script_progression "Starting $app's systemd service..."
+ynh_systemctl --service="$app" --action="start" --log_path="systemd" 
 
 #=================================================
 # END OF SCRIPT

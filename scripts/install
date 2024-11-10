@@ -15,46 +15,71 @@ ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from git forge
+# Download, check integrity, uncompress and patch the source from GitHub
 ynh_setup_source --dest_dir="$install_dir"
+ynh_setup_source --dest_dir="$install_dir/dist" --source_id="mitra-web"
+
 
 #=================================================
-# INSTALL MITRA
+# INSTALL RUST/CARGO
 #=================================================
-# Download mitra deb file and install it.
-dpkg --install --force-confnew "$install_dir/mitra.deb" || true
-dpkg_install_failed=$(dpkg-query -f '${status} ${package}\n' -W | awk '$4 ~ /^mitra.*/ && $3 != "installed" {print $4}' | wc -l)
+ynh_script_progression "Installing Rust and Cargo..." --weight=1
 
-if [[ $dpkg_install_failed -ge 1 ]]; then
-    ynh_die --message="The service mitra cannot be installed for now."
-fi
+# Install rustup with the toolchain needed by Mitra
+pushd "$install_dir"
+    ynh_hide_warnings ynh_exec_as_app \
+        RUSTUP_HOME="$install_dir/.rustup" \
+        CARGO_HOME="$install_dir/.cargo" \
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+    | ynh_hide_warnings ynh_exec_as_app sh -s -- -q -y
+popd
 
-# We need this for the systemd script
-ln -s $data_dir /var/lib/$app
+#=================================================
+# BUILD MITRA
+#=================================================
+pushd $install_dir
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
+popd
 
-# List systemd service in YunoHost
+ln -s $install_dir/target/release/mitra /usr/bin/
+ln -s $install_dir/target/release/mitractl /usr/bin/
 
-yunohost service add "$app" --description="Mitra server backend"
+ynh_safe_rm "$install_dir/.cargo"
+ynh_safe_rm "$install_dir/.rustup"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
+mkdir /etc/$app
+
 ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
 
 ynh_store_file_checksum /etc/$app/config.yaml
 
 #=================================================
-# START SERVICE
-#=================================================
-
-ynh_systemctl
-
-#=================================================
 # CREATE ADMIN
 #=================================================
-ynh_exec_as_app mitractl create-user $admin $adminpass admin
+ynh_exec_as_app mitractl create-account $admin $password admin
+
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression "Configuring log rotation..."
+
+# Use logrotate to manage application logfile(s)
+ynh_config_add_logrotate "/var/log/$app/$app.log"
+ynh_exec_as_app touch "/var/log/$app/$app.log"
+
+#=================================================
+# SETUP & START SERVICE
+#=================================================
+ynh_config_add_systemd
+yunohost service add "$app" --description="Federated micro-blogging platform"
+
+ynh_script_progression "Starting $app's systemd service..."
+ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # NGINX CONFIGURATION

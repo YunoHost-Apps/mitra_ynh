@@ -10,10 +10,10 @@ database_url: postgres://__DB_USER__:__DB_PWD__@127.0.0.1:5432/__DB_NAME__
 # Directory where media attachments and temporary files are stored
 storage_dir: __DATA_DIR__
 # Directory where static files for web client (frontend) are stored
-web_client_dir: /usr/share/mitra/www
+web_client_dir: __INSTALL_DIR__/dist
 
 http_host: '127.0.0.1'
-http_port: 8383
+http_port: __PORT__
 
 # List of allowed origins for CORS (in addition to `instance_uri`)
 # Trailing slashes are not allowed.
