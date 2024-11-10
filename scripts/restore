@@ -33,7 +33,7 @@ ynh_psql_db_shell  < "./db.sql"
 #=================================================
 ynh_script_progression "Restore Mitra server configuration..."
 
-ynh_restore "/etc/$app/config.yaml"
+ynh_restore "/etc/$app"
 
 #=================================================
 # RESTORE SYMLINKS
