@@ -44,14 +44,14 @@ ram.runtime = "50M"
 
     [resources.sources]
         [resources.sources.main]
-        url = "https://codeberg.org/silverpill/mitra/archive/v3.9.0.tar.gz"
-        sha256 = "8b7c441c337b9265982186d7abf1794e181a0b941015b9564c1a18bb1d4adbea"
+        url = "https://codeberg.org/silverpill/mitra/archive/8893ddf822b835a16eaa28c98470bb2aa376617f.tar.gz"
+        sha256 = "a9d7d89b63125c2d0913c369fe40e04a5d8ff33580f463a3d6d0318c85c05225"
         autoupdate.strategy = "latest_forgejo_tag"
         autoupdate.version_regex = "^v(.*)$"
 
         [resources.sources.mitra-web]
-        url = "https://codeberg.org/silverpill/mitra-web/releases/download/v3.9.0/mitra-web_3.9.0.tar.gz"
-        sha256 = "5ac07b648ccf26dd60986c09ea0b7153d77cccf9f70a0607c78a2ad5b40c3b1c"
+        url = "https://codeberg.org/silverpill/mitra-web/archive/f0438be0defcea943eb7234240a07db3b71a19f7.tar.gz"
+        sha256 = "22b64dc3733ddbd0c0f373a3cc3046ba578e5e45b972f963c7f686c425c126bf"
         autoupdate.upstream = "https://codeberg.org/silverpill/mitra-web"
         autoupdate.strategy = "latest_forgejo_release"
         autoupdate.version_regex = "^mitra-web_(.*)$"

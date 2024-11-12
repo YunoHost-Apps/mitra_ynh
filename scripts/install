@@ -17,7 +17,7 @@ ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from GitHub
 ynh_setup_source --dest_dir="$install_dir"
-ynh_setup_source --dest_dir="$install_dir/dist" --source_id="mitra-web"
+ynh_setup_source --dest_dir="$install_dir/mitra-web-src" --source_id="mitra-web"
 
 
 #=================================================
@@ -37,6 +37,8 @@ popd
 #=================================================
 # BUILD MITRA
 #=================================================
+ynh_script_progression --message="Building app... (this might require some time and resources!)" --weight=20
+
 pushd $install_dir
 	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
 popd
@@ -46,6 +48,20 @@ ln -s $install_dir/target/release/mitractl /usr/bin/
 
 ynh_safe_rm "$install_dir/.cargo"
 ynh_safe_rm "$install_dir/.rustup"
+
+#==============================================
+# BUILD MITRA-WEB
+#=================================================
+ynh_script_progression --message="Building web client... (a little more patience!)" --weight=20
+
+pushd "$install_dir/mitra-web-src"
+	ynh_use_nodejs
+	ynh_npm install --no-save
+	ynh_npx allow-scripts
+    ynx_exec_as_app echo "VITE_BACKEND_URL=" > .env.local
+    ynh_npm run build
+    ynx_exec_as_app mv dist $install_dir/
+popd
 
 #=================================================
 # ADD A CONFIGURATION
