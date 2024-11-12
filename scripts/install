@@ -52,14 +52,15 @@ ynh_safe_rm "$install_dir/.rustup"
 #==============================================
 # BUILD MITRA-WEB
 #=================================================
+ynh_nodejs_install
+
 ynh_script_progression --message="Building web client... (a little more patience!)" --weight=20
 
 pushd "$install_dir/mitra-web-src"
-	ynh_use_nodejs
-	ynh_npm install --no-save
-	ynh_npx allow-scripts
+	ynx_exec_as_app npm install --no-save
+	ynx_exec_as_app npx allow-scripts
     ynx_exec_as_app echo "VITE_BACKEND_URL=" > .env.local
-    ynh_npm run build
+    ynx_exec_as_app npm run build
     ynx_exec_as_app mv dist $install_dir/
 popd
 
