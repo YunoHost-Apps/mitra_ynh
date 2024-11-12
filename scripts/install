@@ -37,7 +37,7 @@ popd
 #=================================================
 # BUILD MITRA
 #=================================================
-ynh_script_progression --message="Building app... (this might require some time and resources!)" --weight=20
+ynh_script_progression "Building app... (this might require some time and resources!)" --weight=20
 
 pushd $install_dir
 	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
@@ -52,17 +52,19 @@ ynh_safe_rm "$install_dir/.rustup"
 #==============================================
 # BUILD MITRA-WEB
 #=================================================
-ynh_nodejs_install
 
-ynh_script_progression --message="Building web client... (a little more patience!)" --weight=20
+ynh_script_progression "Building web client... (a little more patience!)" --weight=20
 
 pushd "$install_dir/mitra-web-src"
-	ynx_exec_as_app npm install --no-save
-	ynx_exec_as_app npx allow-scripts
-    ynx_exec_as_app echo "VITE_BACKEND_URL=" > .env.local
-    ynx_exec_as_app npm run build
-    ynx_exec_as_app mv dist $install_dir/
+    ynh_nodejs_install
+	ynh_hide_warnings npm install --no-save
+	ynh_hide_warnings npx allow-scripts
+    echo "VITE_BACKEND_URL=" > .env.local
+    ynh_hide_warnings npm run build
+    mv dist $install_dir/
 popd
+
+chown -Rv $app:www-data $install_dir/dist
 
 #=================================================
 # ADD A CONFIGURATION
