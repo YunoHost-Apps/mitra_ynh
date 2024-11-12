@@ -66,6 +66,8 @@ popd
 
 chown -Rv $app:www-data $install_dir/dist
 
+ynh_safe_rm "$install_dir/mitra-web-src"
+
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
