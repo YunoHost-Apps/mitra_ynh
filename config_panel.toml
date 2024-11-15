@@ -12,21 +12,21 @@ services = ["__APP__"]
     name.en = "Instance basic information"
     name.fr = "Informations relatives à l'instance"
         
-        [main.customization.instance_title]
+        [main.info.instance_title]
         
         ask.en = "Name of the instance"
         ask.fr = "Nom de l'instance"
         type = "string"
         bind = " :/etc/__APP__/config.yaml"
 
-        [main.customization.instance_short_description]
+        [main.info.instance_short_description]
         
         ask.en = "Short description of the instance"
         ask.fr = "Brève desctiption de l'instance"
         type = "string"
         bind = " :/etc/__APP__/config.yaml"
 
-        [main.customization.instance_description]
+        [main.info.instance_description]
         
         ask.en = "Description of the instance"
         ask.fr = "Description de l'instance"
