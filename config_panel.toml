@@ -25,10 +25,3 @@ services = ["__APP__"]
         ask.fr = "Brève desctiption de l'instance"
         type = "string"
         bind = " :/etc/__APP__/config.yaml"
-
-        [main.info.instance_description]
-        
-        ask.en = "Description of the instance"
-        ask.fr = "Description de l'instance"
-        type = "text"
-        bind = " :/etc/__APP__/config.yaml"
