@@ -5,7 +5,7 @@ name = "Mitra"
 description.en = "Federated micro-blogging platform."
 description.fr = "Plateforme de micro-blogging fédéré"
 
-version = "3.90~ynh1"
+version = "3.90~ynh2"
 
 maintainers = ["Papa Dragon"]
 
