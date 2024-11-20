@@ -21,7 +21,7 @@ Ini TIDAK boleh diedit dengan tangan.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Versi terkirim:** 3.90~ynh2
+**Versi terkirim:** 3.90~ynh3
 ## Dokumentasi dan sumber daya
 
 - Depot kode aplikasi hulu: <https://codeberg.org/silverpill/mitra>

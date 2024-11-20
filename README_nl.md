@@ -21,7 +21,7 @@ Hij mag NIET handmatig aangepast worden.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Geleverde versie:** 3.90~ynh2
+**Geleverde versie:** 3.90~ynh3
 ## Documentatie en bronnen
 
 - Upstream app codedepot: <https://codeberg.org/silverpill/mitra>

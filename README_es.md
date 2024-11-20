@@ -21,7 +21,7 @@ No se debe editar a mano.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Versión actual:** 3.90~ynh2
+**Versión actual:** 3.90~ynh3
 ## Documentaciones y recursos
 
 - Repositorio del código fuente oficial de la aplicación : <https://codeberg.org/silverpill/mitra>
