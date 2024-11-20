@@ -26,8 +26,8 @@ http_port: __PORT__
 # Domain name
 instance_uri: https://__DOMAIN__
 
-instance_title: Mitra on YunoHost
-instance_short_description: You federated micro-blogging platform
+instance_title: __INSTANCE_TITLE__
+instance_short_description: __INSTANCE_SHORT_DESCRIPTION__
 # Long description can contain markdown syntax
 instance_description: |
   # My instance
