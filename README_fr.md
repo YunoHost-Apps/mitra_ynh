@@ -21,7 +21,7 @@ Il NE doit PAS être modifié à la main.
 Vos sites web seront compatibles avec **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** et bien d'autres encore.
 
 
-**Version incluse :** 3.90~ynh3
+**Version incluse :** 3.10.0~ynh1
 ## Documentations et ressources
 
 - Dépôt de code officiel de l’app : <https://codeberg.org/silverpill/mitra>
