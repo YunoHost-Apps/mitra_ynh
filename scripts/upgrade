@@ -9,6 +9,8 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Loading settings..."
 
 ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$admin --key=username)
+ynh_app_setting_set_default --key=instance_title --value="Mitra on YunoHost"
+ynh_app_setting_set_default --key=instance_short_description --value="Your federated micro-blogging platform"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
