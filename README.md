@@ -5,7 +5,9 @@ It shall NOT be edited by hand.
 
 # Mitra for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mitra.svg)](https://ci-apps.yunohost.org/ci/apps/mitra/) ![Working status](https://ci-apps.yunohost.org/ci/badges/mitra.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mitra.maintain.svg)
+[![Integration level](https://apps.yunohost.org/badge/integration/mitra)](https://ci-apps.yunohost.org/ci/apps/mitra/)
+![Working status](https://apps.yunohost.org/badge/state/mitra)
+![Maintenance status](https://apps.yunohost.org/badge/maintained/mitra)
 
 [![Install Mitra with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mitra)
 
@@ -21,7 +23,7 @@ It shall NOT be edited by hand.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Shipped version:** 3.10.0~ynh1
+**Shipped version:** 3.11.0~ynh1
 ## Documentation and resources
 
 - Upstream app code repository: <https://codeberg.org/silverpill/mitra>

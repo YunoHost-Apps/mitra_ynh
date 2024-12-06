@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Mitra untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/mitra.svg)](https://ci-apps.yunohost.org/ci/apps/mitra/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/mitra.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/mitra.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/mitra)](https://ci-apps.yunohost.org/ci/apps/mitra/)
+![Status kerja](https://apps.yunohost.org/badge/state/mitra)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/mitra)
 
 [![Pasang Mitra dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mitra)
 
@@ -21,7 +23,7 @@ Ini TIDAK boleh diedit dengan tangan.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Funkwhale**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Versi terkirim:** 3.10.0~ynh1
+**Versi terkirim:** 3.11.0~ynh1
 ## Dokumentasi dan sumber daya
 
 - Depot kode aplikasi hulu: <https://codeberg.org/silverpill/mitra>
