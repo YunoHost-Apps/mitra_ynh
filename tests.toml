@@ -14,5 +14,5 @@ test_format = 1.0
     # Default args to use for install
     # -------------------------------
 
-    test_upgrade_from.bdcc96bdef8f933cce0ad1508118067cdef09957.name = "Upgrade from 3.80~ynh1"
+    test_upgrade_from.8fd0bef8eeb983e3a6fbcb46b73c713d7f5bf7d5.name = "Upgrade from 3.10.0~ynh1"
 
