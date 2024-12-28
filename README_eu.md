@@ -23,7 +23,7 @@ EZ editatu eskuz.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Paketatutako bertsioa:** 3.12.0~ynh2
+**Paketatutako bertsioa:** 3.12.0~ynh3
 ## Dokumentazioa eta baliabideak
 
 - Jatorrizko aplikazioaren kode-gordailua: <https://codeberg.org/silverpill/mitra>
