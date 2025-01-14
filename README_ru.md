@@ -23,7 +23,7 @@
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Поставляемая версия:** 3.13.1~ynh1
+**Поставляемая версия:** 3.14.0~ynh1
 ## Документация и ресурсы
 
 - Репозиторий кода главной ветки приложения: <https://codeberg.org/silverpill/mitra>
