@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "mitra"
@@ -43,18 +45,18 @@ ram.runtime = "50M"
 [resources]
 
     [resources.sources]
-        [resources.sources.main]
-        url = "https://codeberg.org/silverpill/mitra/archive/v3.18.0.tar.gz"
-        sha256 = "ad897c576b04e4a8cbb227301a6a55eca77d696c6fe7b17c42a1a3ccdcfed500"
+    [resources.sources.main]
+    url = "https://codeberg.org/silverpill/mitra/archive/v3.18.0.tar.gz"
+    sha256 = "ad897c576b04e4a8cbb227301a6a55eca77d696c6fe7b17c42a1a3ccdcfed500"
 
-        autoupdate.strategy = "latest_forgejo_release"
+    autoupdate.strategy = "latest_forgejo_release"
 
-        [resources.sources.mitra-web]
-        url = "https://codeberg.org/silverpill/mitra-web/archive/v3.18.0.tar.gz"
-        sha256 = "01b43f6d25f30a0f5868c5bf935fe9cd1d9be1ded0368ac8cc14f5af3083b4f0"
+    [resources.sources.mitra-web]
+    url = "https://codeberg.org/silverpill/mitra-web/archive/v3.18.0.tar.gz"
+    sha256 = "01b43f6d25f30a0f5868c5bf935fe9cd1d9be1ded0368ac8cc14f5af3083b4f0"
 
-        autoupdate.upstream = "https://codeberg.org/silverpill/mitra-web"
-        autoupdate.strategy = "latest_forgejo_release"
+    autoupdate.upstream = "https://codeberg.org/silverpill/mitra-web"
+    autoupdate.strategy = "latest_forgejo_release"
 
     [resources.system_user]
 
