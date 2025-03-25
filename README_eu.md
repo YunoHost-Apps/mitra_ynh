@@ -23,7 +23,7 @@ EZ editatu eskuz.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Paketatutako bertsioa:** 3.20.1~ynh1
+**Paketatutako bertsioa:** 3.21.0~ynh1
 ## Dokumentazioa eta baliabideak
 
 - Jatorrizko aplikazioaren kode-gordailua: <https://codeberg.org/silverpill/mitra>
@@ -34,7 +34,7 @@ Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **F
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/mitra_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/mitra_ynh/tree/testing --debug
