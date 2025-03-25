@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Mitra para Yunohost
+# Mitra para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/mitra)](https://ci-apps.yunohost.org/ci/apps/mitra/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/mitra)
@@ -23,7 +23,7 @@ No se debe editar a mano.
 Your server will be compatible with **Mastodon**, **Pleroma**, **Pixelfed**, **Friendica**, **Hubzilla**, **(streams)**, **Peertube**, **Plume**, **WriteFreely** and many, many more.
 
 
-**Versión actual:** 3.20.1~ynh1
+**Versión actual:** 3.21.0~ynh1
 ## Documentaciones y recursos
 
 - Repositorio del código fuente oficial de la aplicación : <https://codeberg.org/silverpill/mitra>
