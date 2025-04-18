@@ -41,7 +41,6 @@ ynh_restore "/etc/$app/config.yaml"
 ynh_script_progression "Restoring various files..."
 
 ln -s $install_dir/target/release/mitra /usr/bin/
-ln -s $install_dir/target/release/mitractl /usr/bin/
 
 #=================================================
 # RESTORE LOGROTATE

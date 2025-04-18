@@ -26,7 +26,6 @@ ynh_script_progression "Setting up source files..."
 ynh_safe_rm $install_dir
 ynh_safe_rm "/etc/$app"
 ynh_safe_rm "/usr/bin/mitra"
-ynh_safe_rm "/usr/bin/mitractl"
 
 # Remove the service
 ynh_systemctl --service="$app" --action="stop"
@@ -62,7 +61,6 @@ pushd $install_dir
 popd
 
 ln -s $install_dir/target/release/mitra /usr/bin/
-ln -s $install_dir/target/release/mitractl /usr/bin/
 
 ynh_safe_rm "$install_dir/.cargo"
 ynh_safe_rm "$install_dir/.rustup"
