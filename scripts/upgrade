@@ -25,8 +25,7 @@ ynh_script_progression "Setting up source files..."
 # First we remove the previous install
 ynh_safe_rm $install_dir
 ynh_safe_rm "/etc/$app"
-ynh_safe_rm "/usr/bin/mitra"
-ynh_safe_rm "/usr/bin/mitractl"
+ynh_safe_rm "/usr/bin/$app"
 
 # Remove the service
 ynh_systemctl --service="$app" --action="stop"
@@ -58,11 +57,10 @@ popd
 #=================================================
 
 pushd $install_dir
-	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/$app/config.yaml cargo build --release --features production"
 popd
 
-ln -s $install_dir/target/release/mitra /usr/bin/
-ln -s $install_dir/target/release/mitractl /usr/bin/
+ln -s $install_dir/target/release/mitra /usr/bin/$app
 
 ynh_safe_rm "$install_dir/.cargo"
 ynh_safe_rm "$install_dir/.rustup"
