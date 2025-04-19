@@ -1,8 +1,9 @@
 # Mitra configuration file
 
-# Database configuration
+# Database configuration.
+# Characters `@` in password `/` in hostname should be percent-encoded.
 # Examples:
-# - postgres://mitra:mitra@127.0.0.1:5432/mitra
+# - postgres://mitra:passw0rd@127.0.0.1:5432/mitra
 # - postgres://mitra@%2Fvar%2Frun%2Fpostgresql/mitra
 database_url: postgres://__DB_USER__:__DB_PWD__@127.0.0.1:5432/__DB_NAME__
 #database_tls_ca_file: /etc/mitra/database.pem
@@ -11,9 +12,21 @@ database_url: postgres://__DB_USER__:__DB_PWD__@127.0.0.1:5432/__DB_NAME__
 storage_dir: __DATA_DIR__
 # Directory where static files for web client (frontend) are stored
 web_client_dir: __INSTALL_DIR__/dist
+# Directory where static files for web client customization are stored.
+# Files in that directory will be served instead of files in `web_client_dir`
+# when their names match.
+#web_client_theme_dir: /var/lib/mitra/theme
 
+# Host and port where HTTP server accepts connections.
 http_host: '127.0.0.1'
 http_port: __PORT__
+
+# Socket on which HTTP server is listening (overrides http_host and http_port).
+# Examples:
+# - 127.0.0.1:8383
+# - /tmp/mitra.sock
+#http_socket: '127.0.0.1:8383'
+#http_socket_perms: 0o600
 
 # List of allowed origins for CORS (in addition to `instance_uri`)
 # Trailing slashes are not allowed.
@@ -48,7 +61,8 @@ registration:
 #  - password
 #  - eip4361
 #  - caip122_monero
-# Access token expiration time (seconds). Default: 7 days
+
+# Access token expiration time (seconds). Default: 604800 (7 days)
 #authentication_token_lifetime: 604800
 
 # EIP-4361 / CAIP-122 login message
@@ -58,21 +72,24 @@ registration:
 #limits:
 #  media:
 #    file_size_limit: 20M
+#    profile_image_size_limit: 5M
 #    emoji_size_limit: 500K
 #  posts:
 #    character_limit: 5000
 
 # Data retention parameters.
 # Objects will be deleted after the specified number of days.
-retention:
-  # Remote posts with which local accounts didn't interact
-  extraneous_posts: 15
-  # Remote accounts without posts
-  empty_profiles: 30
+#retention:
+#  # Remote posts with which local accounts didn't interact
+#  extraneous_posts: 15
+#  # Remote accounts without posts
+#  empty_profiles: 30
 
 # Federation parameters
 #federation:
 #  enabled: true
+#  # By default, requests to private IP addresses are not allowed
+#  #ssrf_protection_enabled: true
 #  # Proxy for outgoing requests
 #  #proxy_url: 'socks5h://127.0.0.1:9050'
 #  # Proxy for outgoing requests to .onion targets
@@ -83,13 +100,17 @@ retention:
 #  #fetcher_timeout: 30
 #  #deliverer_timeout: 10
 
+# OpenMetrics endpoint (/metrics)
+#metrics:
+#  auth_username: null
+#  auth_password: null
+
 # Blockchain integrations
 #blockchains:
 #  - chain_id: monero:mainnet
 #    chain_metadata:
 #      # Displayed on subscription page, can contain markdown syntax
 #      description: null
-#    node_url: 'http://127.0.0.1:18089'
 #    wallet_rpc_url: 'http://127.0.0.1:18083'
 #    wallet_rpc_username: null
 #    wallet_rpc_password: null

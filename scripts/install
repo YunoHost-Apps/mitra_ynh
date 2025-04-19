@@ -40,7 +40,7 @@ popd
 # BUILD MITRA
 #=================================================
 pushd $install_dir
-	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/mitra/config.yaml cargo build --release --features production"
 popd
 
 ln -s $install_dir/target/release/mitra /usr/bin/
@@ -74,9 +74,9 @@ ynh_script_progression "Adding $app's configuration..."
 
 mkdir /etc/$app
 
-ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
+ynh_config_add --template="config.example.yaml" --destination="/etc/mitra/config.yaml"
 
-ynh_store_file_checksum /etc/$app/config.yaml
+ynh_store_file_checksum /etc/mitra/config.yaml
 
 #=================================================
 # CREATE ADMIN

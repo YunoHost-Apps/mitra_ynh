@@ -57,7 +57,7 @@ popd
 #=================================================
 
 pushd $install_dir
-	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; cargo build --release --features production"
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/mitra/config.yaml cargo build --release --features production"
 popd
 
 ln -s $install_dir/target/release/mitra /usr/bin/
