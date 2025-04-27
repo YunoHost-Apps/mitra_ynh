@@ -4,13 +4,13 @@ It shall NOT be edited by hand.
 -->
 
 <h1>
-  <img src="https://raw.githubusercontent.com/YunoHost/apps/master/logos/mitra.png" width="32px" alt="Logo of Mitra">
+  <img src="https://raw.githubusercontent.com/YunoHost/apps/main/logos/mitra.png" width="32px" alt="Logo of Mitra">
   Mitra, packaged for YunoHost
 </h1>
 
 Federated micro-blogging platform.
 
-[![Version: 4.0.0~ynh1](https://img.shields.io/badge/Version-4.0.0~ynh1-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/mitra/)
+[![Version: 4.1.0~ynh1](https://img.shields.io/badge/Version-4.1.0~ynh1-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/mitra/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/mitra"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
