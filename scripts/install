@@ -21,11 +21,10 @@ ynh_script_progression "Setting up source files..."
 ynh_setup_source --dest_dir="$install_dir"
 ynh_setup_source --dest_dir="$install_dir/mitra-web-src" --source_id="mitra-web"
 
-
 #=================================================
 # INSTALL RUST/CARGO
 #=================================================
-ynh_script_progression "Installing Rust and Cargo..." --weight=1
+ynh_script_progression "Installing Rust and Cargo..."
 
 # Install rustup with the toolchain needed by Mitra
 pushd "$install_dir"
@@ -39,6 +38,7 @@ popd
 #=================================================
 # BUILD MITRA
 #=================================================
+
 pushd $install_dir
 	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/$app/config.yaml cargo build --release --features production"
 popd
@@ -51,8 +51,7 @@ ynh_safe_rm "$install_dir/.rustup"
 #==============================================
 # BUILD MITRA-WEB
 #=================================================
-
-ynh_script_progression "Building web client... (a little more patience!)" --weight=20
+ynh_script_progression "Building Web client... (a little more patience!)"
 
 pushd "$install_dir/mitra-web-src"
     ynh_nodejs_install
@@ -81,6 +80,7 @@ ynh_store_file_checksum /etc/$app/config.yaml
 #=================================================
 # CREATE ADMIN
 #=================================================
+
 ynh_exec_as_app $app create-account $admin $password admin
 
 #=================================================
@@ -95,6 +95,7 @@ ynh_exec_as_app touch "/var/log/$app/$app.log"
 #=================================================
 # SETUP & START SERVICE
 #=================================================
+
 ynh_config_add_systemd
 yunohost service add "$app" --description="Federated micro-blogging platform"
 
@@ -108,10 +109,6 @@ ynh_script_progression "Configuring Nginx..."
 
 # Create a dedicated NGINX config
 ynh_config_add_nginx
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
 
 #=================================================
 # SETUP FAIL2BAN

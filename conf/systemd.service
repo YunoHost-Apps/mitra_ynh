@@ -1,5 +1,5 @@
 [Unit]
-Description=Mitra Server
+Description=Mitra: Federated micro-blogging platform
 After=postgresql.service
 Requires=postgresql.service
 
@@ -46,4 +46,3 @@ CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_PTRACE CAP_SYSLOG
 
 [Install]
 WantedBy=multi-user.target
-
