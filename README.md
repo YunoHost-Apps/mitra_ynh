@@ -8,7 +8,7 @@ It shall NOT be edited by hand.
   Mitra, packaged for YunoHost
 </h1>
 
-Federated micro-blogging platform.
+Federated micro-blogging platform
 
 [![Version: 4.2.1~ynh2](https://img.shields.io/badge/Version-4.2.1~ynh2-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/mitra/)
 
