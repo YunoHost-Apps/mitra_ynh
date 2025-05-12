@@ -6,7 +6,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # REMOVE SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Removing system configurations related to $app..." --weight=1
+ynh_script_progression "Removing system configurations related to $app..."
 
 # Remove the service
 if ynh_hide_warnings yunohost service status "$app" >/dev/null; then
@@ -19,13 +19,11 @@ ynh_config_remove_systemd
 # Remove the dedicated NGINX config
 ynh_config_remove_nginx
 
-#=================================================
-# REMOVE VARIOUS FILES
-#=================================================
-ynh_script_progression "Removing various files..."
+# Remove other various files specific to the app... such as:
 
 # Remove a directory securely
 ynh_safe_rm "/etc/$app"
+
 ynh_safe_rm "/usr/bin/$app"
 
 #=================================================

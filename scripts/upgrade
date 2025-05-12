@@ -13,11 +13,6 @@ ynh_app_setting_set_default --key=instance_title --value="Mitra on YunoHost"
 ynh_app_setting_set_default --key=instance_short_description --value="Your federated micro-blogging platform"
 
 #=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-ynh_script_progression "Ensuring downward compatibility..."
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
@@ -41,7 +36,7 @@ ynh_setup_source --dest_dir="$install_dir/mitra-web-src" --source_id="mitra-web"
 #=================================================
 # INSTALL RUST/CARGO
 #=================================================
-ynh_script_progression "Installing Rust and Cargo..." --weight=1
+ynh_script_progression "Installing Rust and Cargo..."
 
 # Install rustup with the toolchain needed by Mitra
 pushd "$install_dir"
@@ -68,8 +63,7 @@ ynh_safe_rm "$install_dir/.rustup"
 #==============================================
 # BUILD MITRA-WEB
 #=================================================
-
-ynh_script_progression "Building web client... (a little more patience!)" --weight=20
+ynh_script_progression "Building Web client... (a little more patience!)"
 
 pushd "$install_dir/mitra-web-src"
     ynh_nodejs_install
@@ -96,21 +90,22 @@ ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.
 ynh_store_file_checksum /etc/$app/config.yaml
 
 #=================================================
-# SETUP & START SERVICE
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_config_add_systemd
-yunohost service add "$app" --description="Federated micro-blogging platform"
-
-ynh_script_progression "Starting $app's systemd service..."
-ynh_systemctl --service="$app" --action="start" --log_path="systemd"
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Configuring Nginx..."
+ynh_script_progression "Upgrading system configurations related to $app..."
 
 # Create a dedicated NGINX config
 ynh_config_add_nginx
+
+ynh_config_add_systemd
+yunohost service add "$app" --description="Federated micro-blogging platform"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT
