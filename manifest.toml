@@ -7,7 +7,7 @@ name = "Mitra"
 description.en = "Federated micro-blogging platform"
 description.fr = "Plateforme de micro-blogging fédéré"
 
-version = "4.4.0~ynh1"
+version = "4.5.0~ynh1"
 
 maintainers = ["Papa Dragon"]
 
@@ -48,13 +48,13 @@ ram.runtime = "50M"
 
     [resources.sources]
     [resources.sources.main]
-    url = "https://codeberg.org/silverpill/mitra/archive/v4.4.0.tar.gz"
-    sha256 = "d510799d86e399bc0b81128990e5901dc4276b627e85866db764a254a4885780"
+    url = "https://codeberg.org/silverpill/mitra/archive/v4.5.0.tar.gz"
+    sha256 = "0199dea701c4c71f37249f3fb399d75fdfe633475dc738f7f7e99be9a17160ec"
     autoupdate.strategy = "latest_forgejo_release"
 
     [resources.sources.mitra-web]
-    url = "https://codeberg.org/silverpill/mitra-web/archive/v4.4.0.tar.gz"
-    sha256 = "0c1ba60ef66693bcab11b7a90454a327d25830e827c2638d768e509d2e067618"
+    url = "https://codeberg.org/silverpill/mitra-web/archive/v4.5.0.tar.gz"
+    sha256 = "7ea897ae797d4c357c05a41be9ae62a10fd237764aae15a2469606a11424d07c"
     autoupdate.upstream = "https://codeberg.org/silverpill/mitra-web"
     autoupdate.strategy = "latest_forgejo_release"
 
