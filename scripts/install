@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -54,7 +54,7 @@ ynh_safe_rm "$install_dir/.rustup"
 ynh_script_progression "Building Web client... (a little more patience!)"
 
 pushd "$install_dir/mitra-web-src"
-    ynh_nodejs_install
+    #REMOVEME? ynh_nodejs_install
 	ynh_hide_warnings npm install --no-save
 	ynh_hide_warnings npx allow-scripts
     echo "VITE_BACKEND_URL=" > .env.local
