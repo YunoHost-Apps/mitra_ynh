@@ -10,7 +10,7 @@ It shall NOT be edited by hand.
 
 Federated micro-blogging platform
 
-[![Version: 4.12.0~ynh1](https://img.shields.io/badge/Version-4.12.0~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/mitra/)
+[![Version: 4.13.0~ynh1](https://img.shields.io/badge/Version-4.13.0~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/mitra/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/mitra"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
