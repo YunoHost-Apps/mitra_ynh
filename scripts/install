@@ -35,6 +35,15 @@ pushd "$install_dir"
 popd
 
 #=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration..."
+
+ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
+
+ynh_store_file_checksum $install_dir/config.yaml
+
+#=================================================
 # BUILD MITRA
 #=================================================
 
@@ -62,14 +71,6 @@ chown -Rv $app:www-data $install_dir/dist
 
 ynh_safe_rm "$install_dir/mitra-web-src"
 
-#=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression "Adding $app's configuration..."
-
-ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
-
-ynh_store_file_checksum $install_dir/config.yaml
 
 #=================================================
 # CREATE ADMIN
