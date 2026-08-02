@@ -12,16 +12,10 @@ if ynh_hide_warnings yunohost service status "$app" >/dev/null; then
     yunohost service remove "$app"
 fi
 
-ynh_systemctl --service="$app" --action="stop"
 ynh_config_remove_systemd
 
 # Remove the dedicated NGINX config
 ynh_config_remove_nginx
-
-# Remove a directory securely
-ynh_safe_rm "/etc/$app"
-
-ynh_safe_rm "/usr/bin/$app"
 
 #=================================================
 # END OF SCRIPT

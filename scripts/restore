@@ -24,20 +24,6 @@ ynh_script_progression "Restoring  PostgreSQL database..."
 ynh_psql_db_shell < ./db.sql
 
 #=================================================
-# RESTORE CONFIG FILE
-#=================================================
-ynh_script_progression "Restore Mitra server configuration..."
-
-ynh_restore "/etc/$app/config.yaml"
-
-#=================================================
-# RESTORE SYMLINKS
-#=================================================
-ynh_script_progression "Restoring various files..."
-
-ln -s $install_dir/target/release/mitra /usr/bin/$app
-
-#=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."

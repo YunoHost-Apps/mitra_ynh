@@ -3,9 +3,16 @@
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
+# STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression "Loading settings..."
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
+
+#=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression "Ensuring downward compatibility..."
 
 ynh_app_setting_set_default --key=admin --value=$(ynh_user_get_info --username=$admin --key=username)
 ynh_app_setting_set_default --key=instance_title --value="Mitra on YunoHost"
@@ -16,21 +23,9 @@ ynh_app_setting_set_default --key=instance_short_description --value="Your feder
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# First we remove the previous install
-ynh_safe_rm $install_dir
-ynh_safe_rm "/etc/$app"
-ynh_safe_rm "/usr/bin/$app"
-
-# Remove the service
-ynh_systemctl --service="$app" --action="stop"
-ynh_config_remove_systemd
-
-# Remove the dedicated NGINX config
-ynh_config_remove_nginx
-
 # Download, check integrity, uncompress and patch the source from GitHub
-ynh_setup_source --dest_dir="$install_dir"
-ynh_setup_source --dest_dir="$install_dir/mitra-web-src" --source_id="mitra-web"
+ynh_setup_source --dest_dir="$install_dir"  --full_replace
+ynh_setup_source --dest_dir="$install_dir/mitra-web-src" --source_id="mitra-web"  --full_replace
 
 #=================================================
 # INSTALL RUST/CARGO
@@ -51,10 +46,8 @@ popd
 #=================================================
 
 pushd $install_dir
-	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/$app/config.yaml cargo build --release --features production"
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=$install_dir/config.yaml cargo build --release --features production"
 popd
-
-ln -s $install_dir/target/release/mitra /usr/bin/$app
 
 ynh_safe_rm "$install_dir/.cargo"
 ynh_safe_rm "$install_dir/.rustup"
@@ -81,11 +74,9 @@ ynh_safe_rm "$install_dir/mitra-web-src"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-mkdir /etc/$app
+ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
-ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
-
-ynh_store_file_checksum /etc/$app/config.yaml
+ynh_store_file_checksum $install_dir/config.yaml
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
@@ -103,7 +94,7 @@ yunohost service add "$app" --description="Federated micro-blogging platform"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --log_path="systemd"
+ynh_systemctl --service="$app" --action="start" --log_path="/var/log/__APP__/__APP__.log"
 
 #=================================================
 # END OF SCRIPT

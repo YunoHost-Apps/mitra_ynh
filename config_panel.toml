@@ -17,11 +17,11 @@ services = ["__APP__"]
         ask.en = "Name of the instance"
         ask.fr = "Nom de l'instance"
         type = "string"
-        bind = " :/etc/__APP__/config.yaml"
+        bind = " :__INSTALL_DIR__/config.yaml"
 
         [main.info.instance_short_description]
         
         ask.en = "Short description of the instance"
         ask.fr = "Brève desctiption de l'instance"
         type = "string"
-        bind = " :/etc/__APP__/config.yaml"
+        bind = " :__INSTALL_DIR__/config.yaml"

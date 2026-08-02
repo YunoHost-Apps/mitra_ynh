@@ -39,10 +39,8 @@ popd
 #=================================================
 
 pushd $install_dir
-	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=/etc/$app/config.yaml cargo build --release --features production"
+	ynh_hide_warnings ynh_exec_as_app bash -c "source $install_dir/.cargo/env; DEFAULT_CONFIG_PATH=$install_dir/config.yaml cargo build --release --features production"
 popd
-
-ln -s $install_dir/target/release/mitra /usr/bin/$app
 
 ynh_safe_rm "$install_dir/.cargo"
 ynh_safe_rm "$install_dir/.rustup"
@@ -69,11 +67,9 @@ ynh_safe_rm "$install_dir/mitra-web-src"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-mkdir /etc/$app
+ynh_config_add --template="config.example.yaml" --destination="$install_dir/config.yaml"
 
-ynh_config_add --template="config.example.yaml" --destination="/etc/$app/config.yaml"
-
-ynh_store_file_checksum /etc/$app/config.yaml
+ynh_store_file_checksum $install_dir/config.yaml
 
 #=================================================
 # CREATE ADMIN
@@ -82,35 +78,26 @@ ynh_store_file_checksum /etc/$app/config.yaml
 ynh_exec_as_app $app create-account $admin $password admin
 
 #=================================================
-# SETUP LOGROTATE
+# SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression "Configuring log rotation..."
+ynh_script_progression "Adding system configurations related to $app..."
+
+# Create a dedicated NGINX config
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+yunohost service add "$app" --description="Federated micro-blogging platform"
 
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate "/var/log/$app/$app.log"
 ynh_exec_as_app touch "/var/log/$app/$app.log"
 
 #=================================================
-# SETUP & START SERVICE
+# START SYSTEMD SERVICE
 #=================================================
-
-ynh_config_add_systemd
-yunohost service add "$app" --description="Federated micro-blogging platform"
-
 ynh_script_progression "Starting $app's systemd service..."
-ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Configuring Nginx..."
-
-# Create a dedicated NGINX config
-ynh_config_add_nginx
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
+ynh_systemctl --service="$app" --action="start" --log_path="/var/log/__APP__/__APP__.log"
 
 #=================================================
 # END OF SCRIPT

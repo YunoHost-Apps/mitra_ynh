@@ -8,7 +8,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__DATA_DIR__
-ExecStart=/usr/bin/__APP__ server
+ExecStart=__INSTALL_DIR__/target/release/mitra server
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
